@@ -1,7 +1,9 @@
+using HackFSE_Stockmarket.StockMarket.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,9 +30,13 @@ namespace HackFSE_Stockmarket
         {
 
             services.AddControllers();
+            services.AddDbContextPool<StockMarketContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
+            builder=>builder.EnableRetryOnFailure())
+            );
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HackFSE_Stockmarket", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HackFSE_Stockmarket", Version = "v1" }) ;
             });
         }
 
