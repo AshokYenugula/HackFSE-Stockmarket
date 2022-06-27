@@ -1,3 +1,4 @@
+using HackFSE_Stockmarket.Service;
 using HackFSE_Stockmarket.StockMarket.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +39,9 @@ namespace HackFSE_Stockmarket
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HackFSE_Stockmarket", Version = "v1" }) ;
             });
+           // services.AddTransient<CompanyService, CompanyService>();
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
