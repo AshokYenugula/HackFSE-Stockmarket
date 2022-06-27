@@ -1,4 +1,5 @@
-﻿using HackFSE_Stockmarket.Models;
+﻿using HackFSE_Stockmarket.Interfaces;
+using HackFSE_Stockmarket.Models;
 using HackFSE_Stockmarket.StockMarket.Data;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HackFSE_Stockmarket.Repository
 {
-    public class CompanyRepo
+    public class CompanyRepo : ICompanyRepo
     {
         public readonly StockMarketContext stockMarketContext;
 
@@ -19,18 +20,23 @@ namespace HackFSE_Stockmarket.Repository
         {
             try
             {
-                using (var obj = this.stockMarketContext.Database.BeginTransaction())
-                {
-                    var companyExists = this.stockMarketContext.Company.SingleOrDefault(c => c.CompanyCode == company.CompanyCode);
-                    if (companyExists == null)
+                //var executionStrategy = this.stockMarketContext.Database.CreateExecutionStrategy();
+                //executionStrategy.Execute(() =>
+                //{
+                    using (var obj = this.stockMarketContext.Database.BeginTransaction())
                     {
-                        this.stockMarketContext.Company.Add(company);
-                        this.stockMarketContext.SaveChanges();
-                        obj.Commit();
-                    }
+                        var companyExists = this.stockMarketContext.Company.FirstOrDefault(c => c.CompanyCode == company.CompanyCode);
+                        if (companyExists == null)
+                        {
+                            this.stockMarketContext.Company.Add(company);
+                            this.stockMarketContext.SaveChanges();
+                            obj.Commit();
+                        }
+                    return true;
                 }
-                return true;
+                //});
             }
+
             catch (Exception ex)
             {
                 throw ex;

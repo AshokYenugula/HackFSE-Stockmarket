@@ -16,9 +16,9 @@ namespace HackFSE_Stockmarket.Controllers
     {
 
         public StockMarketContext stockMarketContext;
-        public readonly CompanyService companyServiceObj;
+        public readonly ICompanyService companyServiceObj;
         
-        public StockMarket(StockMarketContext employeeDbContext, CompanyService companyService)
+        public StockMarket(StockMarketContext employeeDbContext, ICompanyService companyService)
         {
             stockMarketContext = employeeDbContext;
             this.companyServiceObj = companyService;

@@ -1,3 +1,5 @@
+using HackFSE_Stockmarket.Interfaces;
+using HackFSE_Stockmarket.Repository;
 using HackFSE_Stockmarket.Service;
 using HackFSE_Stockmarket.StockMarket.Data;
 using Microsoft.AspNetCore.Builder;
@@ -39,7 +41,8 @@ namespace HackFSE_Stockmarket
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HackFSE_Stockmarket", Version = "v1" }) ;
             });
-           // services.AddTransient<CompanyService, CompanyService>();
+            services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<ICompanyRepo, CompanyRepo>();
         }
 
 

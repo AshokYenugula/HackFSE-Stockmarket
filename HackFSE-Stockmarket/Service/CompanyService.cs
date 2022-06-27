@@ -1,4 +1,5 @@
-﻿using HackFSE_Stockmarket.Models;
+﻿using HackFSE_Stockmarket.Interfaces;
+using HackFSE_Stockmarket.Models;
 using HackFSE_Stockmarket.Repository;
 using System;
 using System.Collections.Generic;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace HackFSE_Stockmarket.Service
 {
-    public class CompanyService
+    public class CompanyService : ICompanyService
     {
-        public readonly CompanyRepo companyRepoObj;
+        public readonly ICompanyRepo companyRepoObj;
 
-        public CompanyService(CompanyRepo companyRepoObj)
+        public CompanyService(ICompanyRepo companyRepoObj)
         {
             this.companyRepoObj = companyRepoObj;
         }
