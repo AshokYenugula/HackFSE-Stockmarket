@@ -17,24 +17,32 @@ namespace HackFSE_Stockmarket.Controllers
 
         public StockMarketContext stockMarketContext;
         public readonly ICompanyService companyServiceObj;
-        
+
         public StockMarket(StockMarketContext employeeDbContext, ICompanyService companyService)
         {
             stockMarketContext = employeeDbContext;
             this.companyServiceObj = companyService;
-        }
+        }       
 
-        [HttpGet("register")]
-        public IEnumerable<Company> GetCompanie()
-        {
-            return stockMarketContext.Company.ToArray();
-        }
-
-        [HttpPost]
+        [HttpPost("Register")]
         public IActionResult RegisterCompany(Company companyObj)
         {
             var result = this.companyServiceObj.RegisterCompany(companyObj);
             return Content(result);
+        }
+
+        [HttpGet("Info/{companyCode}")]
+        public Company GetCompanyInfo(string companyCode)
+        {
+            var result = this.companyServiceObj.GetCompanyInfo(companyCode);
+            return result;
+        }
+
+        [HttpGet("getAll")]
+        public List<Company> GetAllCompany()
+        {
+            var result = this.companyServiceObj.GetAllCompany();
+            return result;
         }
     }
 }

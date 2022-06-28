@@ -1,6 +1,7 @@
 ﻿using HackFSE_Stockmarket.Interfaces;
 using HackFSE_Stockmarket.Models;
 using HackFSE_Stockmarket.StockMarket.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,29 +19,40 @@ namespace HackFSE_Stockmarket.Repository
         }
         public bool RegisterCompany(Company company)
         {
-            try
+            var strategy = stockMarketContext.Database.CreateExecutionStrategy();
+            strategy.Execute(() =>
             {
-                //var executionStrategy = this.stockMarketContext.Database.CreateExecutionStrategy();
-                //executionStrategy.Execute(() =>
-                //{
-                    using (var obj = this.stockMarketContext.Database.BeginTransaction())
-                    {
-                        var companyExists = this.stockMarketContext.Company.FirstOrDefault(c => c.CompanyCode == company.CompanyCode);
-                        if (companyExists == null)
-                        {
-                            this.stockMarketContext.Company.Add(company);
-                            this.stockMarketContext.SaveChanges();
-                            obj.Commit();
-                        }
-                    return true;
-                }
-                //});
-            }
 
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                //BeginTransaction
+                using (var transaction = stockMarketContext.Database.BeginTransaction())
+                {
+
+                    var companyExists = this.stockMarketContext.Company.FirstOrDefault(c => c.CompanyCode == company.CompanyCode);
+                    if (companyExists == null)
+                    {
+                        this.stockMarketContext.Company.Add(company);
+                        this.stockMarketContext.SaveChanges();
+                    }
+
+                    //End Transaction 
+                    transaction.Commit();
+                }
+
+            });
+            return true;
         }
+
+        public Company GetCompanyInfo(string companyCode)
+        {
+            var companyInfo = this.stockMarketContext.Company.FirstOrDefault(c => c.CompanyCode == companyCode);
+            return companyInfo;
+        }
+
+        public List<Company> GetAllCompany()
+        {
+            var companyInfo = this.stockMarketContext.Company.ToList();
+            return companyInfo;
+        }
+
     }
 }

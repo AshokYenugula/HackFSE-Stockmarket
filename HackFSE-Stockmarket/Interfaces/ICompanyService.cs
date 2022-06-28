@@ -9,5 +9,9 @@ namespace HackFSE_Stockmarket
    public  interface ICompanyService
     {
         public string RegisterCompany(Company company);
+
+        public Company GetCompanyInfo(string companyCode);
+
+        public List<Company> GetAllCompany();
     }
 }

@@ -35,5 +35,41 @@ namespace HackFSE_Stockmarket.Service
                 throw ex;
             }
         }
+
+        public Company GetCompanyInfo(string companyCode)
+        {
+            try
+            {
+                var result = this.companyRepoObj.GetCompanyInfo(companyCode);
+                if (result == null)
+                {
+                    //throw new HttpResponseException(Request.CreateErrorResponse(HttpRequest.)) 
+                   throw new Exception("Invalid Company Code");
+                }
+                return result;                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Company> GetAllCompany()
+        {
+            try
+            {
+                var result = this.companyRepoObj.GetAllCompany();
+                if (result == null)
+                {
+                    //throw new HttpResponseException(Request.CreateErrorResponse(HttpRequest.)) 
+                    throw new Exception("Invalid Company Code");
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
