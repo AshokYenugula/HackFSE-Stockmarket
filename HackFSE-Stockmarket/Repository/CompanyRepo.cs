@@ -79,5 +79,30 @@ namespace HackFSE_Stockmarket.Repository
             return true;
         }
 
+        public bool AddStock(Stock stock)
+        {
+            var strategy = stockMarketContext.Database.CreateExecutionStrategy();
+            strategy.Execute(() =>
+            {
+
+                //BeginTransaction
+                using (var transaction = stockMarketContext.Database.BeginTransaction())
+                {
+
+                    this.stockMarketContext.Stock.Add(stock);
+                    this.stockMarketContext.SaveChanges();
+
+                    //End Transaction 
+                    transaction.Commit();
+                }
+
+            });
+            return true;
+        }
+
+        public List<Stock> GetAllStocks(string companycode, DateTime startdate, DateTime enddate)
+        {
+            return this.stockMarketContext.Stock.Where(x => x.CompanyCode == companycode && x.StockDate >= startdate && x.StockDate <= enddate).ToList();
+        }
     }
 }

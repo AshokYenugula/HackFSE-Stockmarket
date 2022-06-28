@@ -13,5 +13,9 @@ namespace HackFSE_Stockmarket.Interfaces
         public List<Company> GetAllCompany();
 
         public bool DeleteCompany(string companycode);
+
+        public bool AddStock(Stock stock);
+
+        public List<Stock> GetAllStocks(string companycode, DateTime startdate, DateTime enddate);
     }
 }

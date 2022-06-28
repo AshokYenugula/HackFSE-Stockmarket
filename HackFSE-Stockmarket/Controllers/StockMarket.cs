@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HackFSE_Stockmarket.Controllers
 {
-    [Route("api/market/company")]
+    [Route("api/market/")]
     [ApiController]
     public class StockMarket : ControllerBase
     {
@@ -24,32 +24,45 @@ namespace HackFSE_Stockmarket.Controllers
             this.companyServiceObj = companyService;
         }       
 
-        [HttpPost("Register")]
+        [HttpPost("company/Register")]
         public IActionResult RegisterCompany(Company companyObj)
         {
             var result = this.companyServiceObj.RegisterCompany(companyObj);
             return Content(result);
         }
 
-        [HttpGet("Info/{companyCode}")]
+        [HttpGet("company/Info/{companyCode}")]
         public Company GetCompanyInfo(string companyCode)
         {
             var result = this.companyServiceObj.GetCompanyInfo(companyCode);
             return result;
         }
 
-        [HttpGet("getAll")]
+        [HttpGet("company/getAll")]
         public List<Company> GetAllCompany()
         {
             var result = this.companyServiceObj.GetAllCompany();
             return result;
         }
 
-        [HttpGet("delete/{companyCode}")]
+        [HttpGet("company/delete/{companyCode}")]
         public Company DeleteCompanyDeatils(string companyCode)
         {
             var result = this.companyServiceObj.GetCompanyInfo(companyCode);
             return result;
+        }
+
+        [HttpPost("stock/add/{companycode}")]
+        public string AddStock([FromBody]Stock stock,string companycode)
+        {
+            return this.companyServiceObj.AddStock(stock);
+        }
+
+        [HttpGet("stock/get/{companycode}/{startdate}/{enddate}")]
+        public List<Stock> GetAllStocks(string companycode, DateTime startdate, DateTime enddate)
+        {
+            return this.companyServiceObj.GetAllStocks(companycode,startdate,enddate);
+           
         }
     }
 }

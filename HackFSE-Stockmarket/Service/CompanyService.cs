@@ -87,5 +87,24 @@ namespace HackFSE_Stockmarket.Service
                 throw ex;
             }
         }
+
+        public string AddStock(Stock stock)
+        {
+            try
+            {
+                bool result = this.companyRepoObj.AddStock(stock);
+
+                return result ? "Stock Successfully" : "Stock did not added successfully";
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public List<Stock> GetAllStocks(string companycode, DateTime startdate, DateTime enddate)
+        {
+            return this.companyRepoObj.GetAllStocks(companycode, startdate, enddate);
+        }
     }
 }
