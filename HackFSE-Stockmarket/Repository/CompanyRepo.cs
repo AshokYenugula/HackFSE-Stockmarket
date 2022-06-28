@@ -54,5 +54,30 @@ namespace HackFSE_Stockmarket.Repository
             return companyInfo;
         }
 
+        public bool DeleteCompany(string companycode)
+        {
+            var strategy = stockMarketContext.Database.CreateExecutionStrategy();
+            strategy.Execute(() =>
+            {
+
+                //BeginTransaction
+                using (var transaction = stockMarketContext.Database.BeginTransaction())
+                {
+
+                    var companyExists = this.stockMarketContext.Company.FirstOrDefault(c => c.CompanyCode == companycode);
+                    if (companyExists != null)
+                    {
+                        this.stockMarketContext.Company.Remove(companyExists);
+                        this.stockMarketContext.SaveChanges();
+                    }
+
+                    //End Transaction 
+                    transaction.Commit();
+                }
+
+            });
+            return true;
+        }
+
     }
 }

@@ -44,5 +44,12 @@ namespace HackFSE_Stockmarket.Controllers
             var result = this.companyServiceObj.GetAllCompany();
             return result;
         }
+
+        [HttpGet("delete/{companyCode}")]
+        public Company DeleteCompanyDeatils(string companyCode)
+        {
+            var result = this.companyServiceObj.GetCompanyInfo(companyCode);
+            return result;
+        }
     }
 }

@@ -71,5 +71,21 @@ namespace HackFSE_Stockmarket.Service
                 throw ex;
             }
         }
+
+        public string DeleteCompany(string companycode)
+        {
+            try
+            {
+
+                bool result = this.companyRepoObj.DeleteCompany(companycode);
+
+                return result ? "Company deleted Successfully" : "Company deletion Unsuccessfully";
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
     }
 }

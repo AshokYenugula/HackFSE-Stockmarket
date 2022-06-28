@@ -11,5 +11,7 @@ namespace HackFSE_Stockmarket.Interfaces
         public bool RegisterCompany(Company company);
         public Company GetCompanyInfo(string companyCode);
         public List<Company> GetAllCompany();
+
+        public bool DeleteCompany(string companycode);
     }
 }

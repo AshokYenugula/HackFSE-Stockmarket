@@ -13,5 +13,7 @@ namespace HackFSE_Stockmarket
         public Company GetCompanyInfo(string companyCode);
 
         public List<Company> GetAllCompany();
+
+        public string DeleteCompany(string companyCode);
     }
 }
