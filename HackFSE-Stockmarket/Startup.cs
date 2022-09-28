@@ -52,10 +52,10 @@ namespace HackFSE_Stockmarket
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HackFSE_Stockmarket v1"));
-            }
 
+            }
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HackFSE_Stockmarket v1"));
             app.UseHttpsRedirection();
 
             app.UseRouting();
