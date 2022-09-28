@@ -41,6 +41,17 @@ namespace HackFSE_Stockmarket
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HackFSE_Stockmarket", Version = "v1" }) ;
             });
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("https://localhost:44351", "http://localhost:4200",
+                                            "https://red-stone-02ce70b10.2.azurestaticapps.net")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+            });
             services.AddTransient<ICompanyService, CompanyService>();
             services.AddTransient<ICompanyRepo, CompanyRepo>();
         }
@@ -54,11 +65,20 @@ namespace HackFSE_Stockmarket
                 app.UseDeveloperExceptionPage();
 
             }
+            
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HackFSE_Stockmarket v1"));
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             app.UseAuthorization();
 
